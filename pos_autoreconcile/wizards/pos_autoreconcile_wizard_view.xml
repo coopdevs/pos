@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+ Copyright 2019 Coop IT Easy SCRLfs
+   Robin Keunen <robin@coopiteasy.be>
+ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+    <record id="view_auto_reconcile_wizard_form" model="ir.ui.view">
+        <field name="model">pos.autoreconcile.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Auto Reconcile">
+                <group>
+                    <field name="account_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </group>
+                <footer>
+                    <button string="Reconcile" name="reconcile" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_auto_reconcile_wizard_action" model="ir.actions.act_window">
+        <field name="name">Autoreconcile accounting moves</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.autoreconcile.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_auto_reconcile_wizard"
+              name="Autoreconcile accounting moves"
+              parent="account.menu_finance_entries"
+              sequence="112"
+              action="pos_auto_reconcile_wizard_action"
+    />
+</odoo>
