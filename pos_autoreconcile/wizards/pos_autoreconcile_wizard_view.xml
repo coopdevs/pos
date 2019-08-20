@@ -7,7 +7,7 @@
 
 <odoo>
 
-    <record id="view_auto_reconcile_wizard_form" model="ir.ui.view">
+    <record id="view_auto_reconcile_wizard_wizard" model="ir.ui.view">
         <field name="model">pos.autoreconcile.wizard</field>
         <field name="arch" type="xml">
             <form string="Auto Reconcile">
@@ -24,11 +24,54 @@
         </field>
     </record>
 
+    <record id="view_auto_reconcile_wizard_form" model="ir.ui.view">
+        <field name="name">pos.autoreconcile.wizard.form</field>
+        <field name="model">pos.autoreconcile.wizard</field>
+        <field name="arch" type="xml">
+            <form string="view_auto_reconcile_wizard_form">
+                <header>
+                    <button string="Confirm" name="confirm" type="object" class="btn-primary" states="draft"/>
+                    <field name="state" nolabel="1" widget="statusbar" clickable="False"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="account_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <notebook>
+                        <page name="reconcile_lines" string="Move Lines">
+                            <group>
+                                <field name="reconcile_line_ids" nolabel="1">
+                                    <tree name="reconcile_line_tree">
+                                        <field name="company_currency_id" invisible="1"/>
+
+                                        <field name="account_move_line_id"/>
+                                        <field name="date"/>
+                                        <field name="move_id"/>
+                                        <field name="journal_id"/>
+                                        <field name="ref"/>
+                                        <field name="partner_id"/>
+                                        <field name="account_id"/>
+                                        <field name="debit"/>
+                                        <field name="credit"/>
+                                        <field name="reconcile_number"/>
+                                        <field name="full_reconcile_id"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="pos_auto_reconcile_wizard_action" model="ir.actions.act_window">
-        <field name="name">Autoreconcile accounting moves</field>
+        <field name="name">Reconcile POS accounting moves</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">pos.autoreconcile.wizard</field>
-        <field name="view_type">form</field>
+        <field name="view_id" ref="view_auto_reconcile_wizard_wizard"/>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
