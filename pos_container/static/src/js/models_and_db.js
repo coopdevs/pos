@@ -186,7 +186,7 @@ odoo.define('pos_container.models_and_db', function (require) {
                             }
                         }
                     }
-                    self._save_to_server(orders, options)
+                    return self._save_to_server(orders, options)
                 }).done(function (server_ids) {
                     var pending = self.db.get_orders().length;
 
