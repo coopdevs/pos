@@ -409,13 +409,15 @@ odoo.define('pos_container.container', function (require) {
             this._super(val);
             var order = this.pos.get_order();
             if (order.get_selected_orderline()) {
+				var oline = order.get_selected_orderline();
                 var mode = this.numpad_state.get('mode');
                 if( mode === 'tare'){
-                    order.get_selected_orderline().set_tare(val);
+                    oline.set_tare(val);
                 }
-                if (['tare', 'discount', 'price'].indexOf(mode) != -1) {
-                    order.get_selected_orderline().set_tare_mode('MAN');
-                }
+				if( mode === 'quantity' && oline.container) {
+                    oline.set_gross_weight(parseFloat(val) + oline.container.weight);
+				}
+				oline.set_tare_mode('MAN');
             }
         },
     });
