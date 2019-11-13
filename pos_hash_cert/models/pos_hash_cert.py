@@ -21,12 +21,15 @@ class ModuleHash(models.Model):
     @api.multi
     def _compute_hash(self):
 
+        _logger.debug("[pos_hash_cert] USER_DIR = %s" % USER_DIR)
         start_dir = os.path.dirname(os.path.realpath(__file__))
+        _logger.debug("[pos_hash_cert] start_DIR = %s" % start_dir)
+
         last_root = start_dir
         current_root = start_dir
         found_cert_dir = None
 
-        while found_cert_dir is None and current_root != USER_DIR:
+        while found_cert_dir is None and current_root != os.path.dirname(USER_DIR):
             pruned = False
             for root, dirs, files in os.walk(current_root):
                 if not pruned:
@@ -45,6 +48,7 @@ class ModuleHash(models.Model):
             current_root = os.path.dirname(last_root)
 
         if found_cert_dir:
+            _logger.debug("[pos_hash_cert] found_cert_dir = %s" % found_cert_dir)
             certified_modules = [
                 name
                 for name in os.listdir(found_cert_dir)
@@ -55,5 +59,5 @@ class ModuleHash(models.Model):
                 if record.name in certified_modules:
                     record.hash = dirhash(found_cert_dir, 'sha256', excluded_extensions=['pyc'])
         else:
-            # TODO
+            _logger.debug("[pos_hash_cert] no certified modules directory found")
             pass
