@@ -47,7 +47,7 @@ odoo.define('pos_toledo_product.screens', function (require) {
         },
 
         format_price: function (product_price) {
-            var price = (product_price * 1000).toString();
+            var price = (product_price.toFixed(3) * 1000);
             price = ("000000" + price).slice(-6);
             return price;
         },
