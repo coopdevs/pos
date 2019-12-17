@@ -10,24 +10,4 @@
         </t>
     </t>
 
-    <t t-name="SelectEmailPopupWidget">
-        <div class="modal-dialog">
-            <div class="popup popup-email">
-                <p class="message"><t t-esc=" widget.message || 'Error' " /></p>
-
-                <p class="comment"><t t-esc=" widget.comment || '' "/></p>
-                <input style="position:absolute; bottom:80px; left:50px;" name='email' placeholder='Mail'></input>
-                
-                <div class="footer">
-                    <div class="button confirm">
-                        Confirm 
-                    </div>
-                    <div class="button cancel">
-                        Cancel 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </t>
-
 </templates>

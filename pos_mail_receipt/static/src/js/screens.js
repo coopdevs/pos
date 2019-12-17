@@ -24,7 +24,7 @@ odoo.define("pos_mail_receipt.screens", function (require) {
             if( this.pos.get_order().get_client() && this.pos.get_order().get_client().email ) {
                 self._send_email_server(this.pos.get_order().name, {"email": this.pos.get_order().get_client().email, "body_from_ui": body_from_ui});
             } else {
-                this.gui.show_popup('textinput', {
+                this.gui.show_popup('textarea', {
                     'title':_t('E-mail address to use'),
                     'value': '',
                     'confirm': function(value) {
