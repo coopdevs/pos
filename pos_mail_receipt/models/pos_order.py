@@ -3,8 +3,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
+import logging
 import base64
 from odoo import fields, models, api, _
+
+
+_logger = logging.getLogger(__name__)
 
 
 class PosOrder(models.Model):
@@ -18,18 +22,23 @@ class PosOrder(models.Model):
     ):
         order = self.search([("pos_reference", "=", pos_reference)])
         if len(order) < 1:
-            return _("Error: no order found")
+            _logger.error(_("Error: no order found"))
+            return
         if order.email_receipt_sent:
-            return _("E-mail already sent")
+            _logger.info(_("E-mail already sent"))
+            return
         if not email and not order.partner_id and not order.partner_id.email:
-            return _(
-                "Cannot send the ticket, no email address found for the client"
+            _logger.error(
+                _(
+                    "Cannot send the ticket, no email address found for the client"
+                )
             )
         mail_template = self.env.ref("pos_mail_receipt.email_send_ticket")
+        email_values = {}
         if email:
-            mail_template.email_to = email
+            email_values["email_to"] = email
         else:
-            mail_template.email_to = order.partner_id.email
+            email_values["email_to"] = order.partner_id.email
         base64_pdf = self.env["ir.actions.report"]._run_wkhtmltopdf(
             [body_from_ui.encode("utf-16")],
             landscape=False,
@@ -49,10 +58,9 @@ class PosOrder(models.Model):
                 "res_id": order.id,
             }
         )
+        email_values["attachment_ids"] = [attachment.id]
         mail_template.send_mail(
-            order.id,
-            force_send=force,
-            email_values={"attachment_ids": [attachment.id]},
+            order.id, force_send=force, email_values=email_values,
         )
         order.email_receipt_sent = True
 

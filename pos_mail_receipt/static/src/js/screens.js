@@ -54,7 +54,6 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                     timeout: timeout,
                 })
                 .then(function (result) {
-                    console.log(result);
                     return true
                 }).fail(function (type, error){
                     var connection_problem = true;
