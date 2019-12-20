@@ -17,6 +17,10 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                 }
             });
         },
+        click_next: function() {
+            this._super();
+            this.$('.button.email').removeClass("highlight");
+        },
         email: function() {
             var self = this;
             var email = false;
@@ -42,6 +46,7 @@ odoo.define("pos_mail_receipt.screens", function (require) {
             var self = this;
             options = options || {};
             var timeout = typeof options.timeout === 'number' ? options.timeout : 7500;
+            this.$('.button.email').addClass("highlight");
             while (self.pos.get("synch").state == "connecting") {
                 await sleep(1000);
             }
