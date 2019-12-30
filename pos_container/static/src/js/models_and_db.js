@@ -451,7 +451,7 @@ odoo.define('pos_container.models_and_db', function (require) {
                 id: this.id,
                 pack_lot_ids: pack_lot_ids,
                 //custom starts here
-                tare: this.get_tare(),
+                tare: this.get_tare() ? this.get_tare() : null,
                 container_id: this.get_container() ? this.get_container().id : null,
                 container_barcode: this.get_container() ? this.get_container().barcode : null,
                 container_weight: this.get_container() ? this.get_container().weight : null,
