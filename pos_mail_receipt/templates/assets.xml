@@ -4,6 +4,7 @@
 
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr=".">
+            <link href="/pos_mail_receipt/static/src/css/pos.css" rel="stylesheet"/>
             <script
                 type="text/javascript"
                 src="/pos_mail_receipt/static/src/js/screens.js"/>
