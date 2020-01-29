@@ -64,7 +64,7 @@ odoo.define('pos_customer_display_currency.pos_customer_display_currency', funct
                     if ((line.qty_manually_set && mode === 'quantity') || mode === 'tare' || mode === 'price') {
                         // first display "Manual Entry"
                         l21 = line.get_quantity_str_with_uom()
-                            + ' x '
+                            + 'x'
                             + line.get_unit_price_with_uom_currency(currency_char, currency_rounding);
                         previous_lines_to_send = [
                             this.proxy.align_left(_t('Manual Entry'), line_length),
@@ -85,7 +85,7 @@ odoo.define('pos_customer_display_currency.pos_customer_display_currency', funct
                     } else if (!line.qty_manually_set && mode === 'quantity') {
                         // first display added product
                         l21 = line.get_quantity_str_with_uom()
-                            + ' x '
+                            + 'x'
                             + line.get_unit_price_with_uom_currency(currency_char, currency_rounding);
                         l22 = ' ' + line.get_display_price().toFixed(currency_rounding) + currency_char;
                         previous_lines_to_send = [
@@ -106,7 +106,7 @@ odoo.define('pos_customer_display_currency.pos_customer_display_currency', funct
 
                         // then display updated product after 3s
                         l21 = line.get_quantity_str_with_uom()
-                            + ' x '
+                            + 'x'
                             + line.get_base_price().toFixed(currency_rounding) + currency_char;
                         updated_lines_to_send = [
                             this.proxy.align_left(line.get_product().display_name, line_length - l22.length) + l22,
