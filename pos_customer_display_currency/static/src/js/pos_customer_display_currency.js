@@ -246,7 +246,7 @@ odoo.define('pos_customer_display_currency.pos_customer_display_currency', funct
         get_quantity_str_with_uom: function(){
             var unit = this.get_unit();
             if(unit && !unit.is_pos_groupable){
-                return this.get_quantity_str() + ' ' + unit.name;
+                return this.get_quantity_str() + '' + unit.name;
             }else{
                 return round_pr(this.quantity, 0.1);
             }
