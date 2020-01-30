@@ -11,4 +11,10 @@
         </xpath>
     </template>
 
+     <template id="report_assets_pdf" inherit_id="web.report_assets_pdf">
+         <xpath expr=".">
+            <link href="/pos_mail_receipt/static/src/css/print.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+
 </odoo>

@@ -33,19 +33,19 @@ class PosOrder(models.Model):
                     "Cannot send the ticket, no email address found for the client"
                 )
             )
-        mail_template = self.env.ref("pos_mail_receipt.email_send_ticket")
         email_values = {}
         if email:
             email_values["email_to"] = email
         else:
             email_values["email_to"] = order.partner_id.email
+
+        receipt = "<main><div class='article'><div class='pos'><div class='pos-receipt-container'>{}</div></div></div></main>".format(body_from_ui)
+
+        bodies, html_ids, header, footer, specific_paperformat_args = self.env["ir.actions.report"]._prepare_html(receipt)
         base64_pdf = self.env["ir.actions.report"]._run_wkhtmltopdf(
-            [body_from_ui.encode("utf-16")],
+            bodies,
             landscape=False,
-            specific_paperformat_args={
-                "data-report-margin-top": 10,
-                "data-report-header-spacing": 10,
-            },
+            specific_paperformat_args=specific_paperformat_args,
         )
         attachment = self.env["ir.attachment"].create(
             {
@@ -59,6 +59,7 @@ class PosOrder(models.Model):
             }
         )
         email_values["attachment_ids"] = [attachment.id]
+        mail_template = self.env.ref("pos_mail_receipt.email_send_ticket")
         mail_template.send_mail(
             order.id, force_send=force, email_values=email_values,
         )

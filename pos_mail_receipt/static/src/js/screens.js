@@ -24,7 +24,7 @@ odoo.define("pos_mail_receipt.screens", function (require) {
         email: function() {
             var self = this;
             var email = false;
-            var body_from_ui = this.$('.pos-sale-ticket').html()
+            var body_from_ui = this.$('.pos-receipt-container').html()
             if( this.pos.get_order().get_client() && this.pos.get_order().get_client().email ) {
                 self._send_email_server(this.pos.get_order().name, {"email": this.pos.get_order().get_client().email, "body_from_ui": body_from_ui});
             } else {
@@ -79,12 +79,14 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                             'title': error.data.message,
                             'body':  error.data.debug
                         });
+                         this.$('.button.email').removeClass("highlight");
                     }
                     if(connection_problem){
                         self.gui.show_popup('error',{
                             'title': _t('The e-mail could not be sent'),
                             'body': _t('Check your internet connection and try again.'),
                         });
+                         this.$('.button.email').removeClass("highlight");
                     }
                 });
         },
