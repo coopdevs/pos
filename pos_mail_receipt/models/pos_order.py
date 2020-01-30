@@ -30,7 +30,8 @@ class PosOrder(models.Model):
         if not email and not order.partner_id and not order.partner_id.email:
             _logger.error(
                 _(
-                    "Cannot send the ticket, no email address found for the client"
+                    "Cannot send the ticket, "
+                    "no email address found for the client"
                 )
             )
         email_values = {}
@@ -39,9 +40,15 @@ class PosOrder(models.Model):
         else:
             email_values["email_to"] = order.partner_id.email
 
-        receipt = "<main><div class='article'><div class='pos'><div class='pos-receipt-container'>{}</div></div></div></main>".format(body_from_ui)
+        receipt = (
+            "<main><div class='article'><div class='pos'>"
+            "<div class='pos-receipt-container'>"
+            "{}</div></div></div></main>".format(body_from_ui)
+        )
 
-        bodies, html_ids, header, footer, specific_paperformat_args = self.env["ir.actions.report"]._prepare_html(receipt)
+        bodies, html_ids, header, footer, specific_paperformat_args = self.env[
+            "ir.actions.report"
+        ]._prepare_html(receipt)
         base64_pdf = self.env["ir.actions.report"]._run_wkhtmltopdf(
             bodies,
             landscape=False,
