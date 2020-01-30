@@ -18,7 +18,7 @@ class PosOrder(models.Model):
 
     @api.model
     def send_mail_receipt(
-        self, pos_reference, email, receipt, force=True
+        self, pos_reference, email, body_from_ui, force=True
     ):
         order = self.search([("pos_reference", "=", pos_reference)])
         if len(order) < 1:
@@ -33,14 +33,14 @@ class PosOrder(models.Model):
                     "Cannot send the ticket, no email address found for the client"
                 )
             )
+        mail_template = self.env.ref("pos_mail_receipt.email_send_ticket")
         email_values = {}
         if email:
             email_values["email_to"] = email
         else:
             email_values["email_to"] = order.partner_id.email
-
         base64_pdf = self.env["ir.actions.report"]._run_wkhtmltopdf(
-            [receipt.encode("utf-16")],
+            [body_from_ui.encode("utf-16")],
             landscape=False,
             specific_paperformat_args={
                 "data-report-margin-top": 10,
@@ -59,7 +59,6 @@ class PosOrder(models.Model):
             }
         )
         email_values["attachment_ids"] = [attachment.id]
-        mail_template = self.env.ref("pos_mail_receipt.email_send_ticket")
         mail_template.send_mail(
             order.id, force_send=force, email_values=email_values,
         )
@@ -73,7 +72,7 @@ class PosOrder(models.Model):
                 self.send_mail_receipt(
                     order["data"]["name"],
                     order["data"]["email"],
-                    order["data"]["receipt"],
+                    order["data"]["body_from_ui"],
                     force=False,
                 )
         return res
