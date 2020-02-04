@@ -330,6 +330,8 @@ odoo.define('pos_container.container', function (require) {
                 orderline.trigger('change', orderline);
             } else {
                 this._super();
+                var orderline = this.pos.get_order().get_selected_orderline();
+                orderline.set_tare_mode('AUTO');
             }
         },
     });
