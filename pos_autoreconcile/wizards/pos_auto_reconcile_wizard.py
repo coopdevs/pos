@@ -124,18 +124,40 @@ class AutoReconcileWizard(models.TransientModel):
             yield "", unbalanced
             raise StopIteration
 
+        values = []
         for rn, lines in grouped_lines(move_lines):
             _logger.info("%s: %s lines" % (rn, len(lines)))
             for line in lines:
-                if rn == '':
-                    print '.',
-                self.env["pos.autoreconcile.wizard.line"].create(
-                    {
-                        "wizard_id": self.id,
-                        "account_move_line_id": line.id,
-                        "reconcile_number": rn,
-                    }
-                )
+                # if rn != '':
+                    values.append([
+                        self.id,
+                        line.id,
+                        rn,
+                        line.date,
+                        line.ref,
+                        line.partner_id.id if line.partner_id.id else None,
+                        line.debit,
+                        line.credit,
+                    ])
+
+        insert = u"""
+        INSERT INTO pos_autoreconcile_wizard_line (
+            wizard_id, 
+            account_move_line_id, 
+            reconcile_number,
+            date,
+            ref,
+            partner_id,
+            debit,
+            credit
+            ) 
+        VALUES 
+        """
+        columns = """(%s,%s,%s,%s,%s,%s,%s,%s)"""
+        args_str = ','.join(self.env.cr.mogrify(columns, x) for x in values)
+        query = insert + args_str
+        # print(query)
+        self.env.cr.execute(query)
 
         return self.get_wizard_form_view()
 

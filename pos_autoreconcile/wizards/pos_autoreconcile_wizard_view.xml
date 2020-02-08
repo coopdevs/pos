@@ -30,6 +30,7 @@
         <field name="arch" type="xml">
             <form string="view_auto_reconcile_wizard_form">
                 <header>
+                    <button string="Reconcile" name="reconcile" type="object" class="btn-primary"/>
                     <button string="Confirm" name="confirm" type="object" class="btn-primary" states="draft"/>
                     <field name="state" nolabel="1" widget="statusbar" clickable="False"/>
                 </header>
