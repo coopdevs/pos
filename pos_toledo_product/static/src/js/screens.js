@@ -59,7 +59,7 @@ odoo.define('pos_toledo_product.screens', function (require) {
             var container = this.gui.get_current_screen_param('container');
 
             queue.schedule(function () {
-                return self.pos.proxy.reset_weight().then(function () {
+                return self.pos.proxy.reset_weight_product().then(function () {
                     self.set_weight(0);
                     self.set_price(0);
                 });
@@ -72,7 +72,7 @@ odoo.define('pos_toledo_product.screens', function (require) {
                 // format tare
                 var tare = this.format_tare(container);
                 queue.schedule(function () {
-                    return self.pos.proxy.scale_read_data_price_tare(price, tare).then(function (scale_answer) {
+                    return self.pos.proxy.scale_read_data_price_tare_product(price, tare).then(function (scale_answer) {
                         self.set_weight(scale_answer.weight);
                         self.set_price(scale_answer.price);
                         if ((scale_answer.error === '30' || scale_answer.error === '31') && scale_answer.weight !== 0) {
@@ -86,7 +86,7 @@ odoo.define('pos_toledo_product.screens', function (require) {
 
             } else {
                 queue.schedule(function () {
-                    return self.pos.proxy.scale_read_data_price(price).then(function (scale_answer) {
+                    return self.pos.proxy.scale_read_data_price_product(price).then(function (scale_answer) {
                         self.set_weight(scale_answer.weight);
                         self.set_price(scale_answer.price);
                         if ((scale_answer.error === '30' || scale_answer.error === '31') && scale_answer.weight !== 0) {

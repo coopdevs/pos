@@ -11,7 +11,7 @@ odoo.define('pos_toledo_product.devices', function (require) {
     var devices = require('point_of_sale.devices');
 
     devices.ProxyDevice.include({
-        reset_weight: function () {
+        reset_weight_product: function () {
             var ret = new $.Deferred();
             this.message('reset_weight').then(function (status) {
                 ret.resolve(status)
@@ -32,7 +32,7 @@ odoo.define('pos_toledo_product.devices', function (require) {
             return ret;
         },
 
-        scale_read_data_price: function (price) {
+        scale_read_data_price_product: function (price) {
             var self = this;
             var ret = new $.Deferred();
             if (self.use_debug_weight) {
@@ -52,7 +52,7 @@ odoo.define('pos_toledo_product.devices', function (require) {
             return ret;
         },
 
-        scale_read_data_price_tare: function (price, tare) {
+        scale_read_data_price_tare_product: function (price, tare) {
             var self = this;
             var ret = new $.Deferred();
             if (self.use_debug_weight) {
