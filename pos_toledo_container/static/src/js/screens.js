@@ -17,13 +17,13 @@ odoo.define('pos_toledo_container.screens', function (require) {
             var priceStr = '001000'; // bizerba doesn't accept '000000' as unit price
 
             queue.schedule(function () {
-                return self.pos.proxy.reset_weight().then(function () {
+                return self.pos.proxy.reset_weight_container().then(function () {
                     self.set_weight(0);
                 });
             }, {duration: 500});
 
             queue.schedule(function () {
-                return self.pos.proxy.scale_read_data_price(priceStr).then(function (scale_answer) {
+                return self.pos.proxy.scale_read_data_price_container(priceStr).then(function (scale_answer) {
                     self.set_weight(scale_answer.weight);
                     if ((scale_answer.error === '30' || scale_answer.error === '31') && scale_answer.weight !== 0) {
                         self.gui.show_screen(self.next_screen);
