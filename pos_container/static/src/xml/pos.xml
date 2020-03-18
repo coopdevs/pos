@@ -203,20 +203,27 @@
                                     </div>
                                 </t>
                             </td>
-                            <td class="pos-right-align">
-                                <t t-esc="orderline.get_quantity_str_with_unit()"/>
-                            </td>
+							<td/>
                             <td class="pos-right-align">
                                 <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               <div style="margin-left:5%">
+								   <t t-esc="orderline.get_quantity_str_with_unit()"/>
+								   x
+								   <t t-esc="widget.format_currency(orderline.get_unit_display_price())"/>/<t t-esc="orderline.get_unit().name"/>
+                               </div>
                             </td>
                         </tr>
                         <t t-if="orderline.get_container()">
                             <tr>
                                 <td>
-                                    <div style="margin-left:5%">
-                                        Tare : <t t-esc="orderline.get_container().weight"/>
-                                        <t t-esc="orderline.get_unit().name"/>
-                                    </div>
+                                   <div style="margin-left:5%">
+                                       Tare : <t t-esc="orderline.get_container().weight"/>
+                                       <t t-esc="orderline.get_unit().name"/>
+                                   </div>
                                 </td>
                             </tr>
                         </t>
@@ -224,7 +231,7 @@
                             <tr>
                                 <td>
                                    <div style="margin-left:5%">
-                                       Tare : <t t-esc="orderline.tare"/>
+                                       Tare : <t t-esc="orderline.get_tare()"/>
                                        <t t-esc="orderline.get_unit().name"/>
                                    </div>
                                 </td>
