@@ -6,6 +6,8 @@ odoo.define("pos_mail_receipt.screens", function (require) {
 
     var screens = require('point_of_sale.screens');
     var rpc = require('web.rpc');
+    var core = require('web.core');
+    var _t = core._t;
 
     var ReceiptScreenWidget = screens.ReceiptScreenWidget.include({
         renderElement: function() {
