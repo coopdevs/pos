@@ -6,6 +6,8 @@ odoo.define("pos_mail_receipt.screens", function (require) {
 
     var screens = require('point_of_sale.screens');
     var rpc = require('web.rpc');
+    var core = require('web.core');
+    var _t = core._t;
 
     var ReceiptScreenWidget = screens.ReceiptScreenWidget.include({
         renderElement: function() {
@@ -79,14 +81,14 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                             'title': error.data.message,
                             'body':  error.data.debug
                         });
-                         this.$('.button.email').removeClass("highlight");
+                         self.$('.button.email').removeClass("highlight");
                     }
                     if(connection_problem){
                         self.gui.show_popup('error',{
                             'title': _t('The e-mail could not be sent'),
                             'body': _t('Check your internet connection and try again.'),
                         });
-                         this.$('.button.email').removeClass("highlight");
+                         self.$('.button.email').removeClass("highlight");
                     }
                 });
         },
