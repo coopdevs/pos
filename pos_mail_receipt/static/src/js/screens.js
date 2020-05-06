@@ -67,6 +67,7 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                     for (var i = 0; i < self.pos.db.get_orders().length; i++) {
                         if (order == self.pos.db.get_orders()[i].data.name) {
                             self.pos.db.get_orders()[i].data["email"] = options["email"] || false;
+                            self.pos.db.get_orders()[i].data["body_from_ui"] = options["body_from_ui"] || false;
                             connection_problem = false;
                         }
                     }
