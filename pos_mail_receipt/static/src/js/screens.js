@@ -86,7 +86,7 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                     if(connection_problem){
                         self.gui.show_popup('error',{
                             'title': _t('The e-mail could not be sent'),
-                            'body': _t('Check your internet connection and try again.'),
+                            'body': _t('The e-mail could not be sent to ') + options["email"] + _t('. Check your internet connection and try again.'),
                         });
                          self.$('.button.email').removeClass("highlight");
                     }
