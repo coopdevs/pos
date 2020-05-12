@@ -67,6 +67,7 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                     for (var i = 0; i < self.pos.db.get_orders().length; i++) {
                         if (order == self.pos.db.get_orders()[i].data.name) {
                             self.pos.db.get_orders()[i].data["email"] = options["email"] || false;
+                            self.pos.db.get_orders()[i].data["body_from_ui"] = options["body_from_ui"] || false;
                             connection_problem = false;
                         }
                     }
@@ -86,7 +87,7 @@ odoo.define("pos_mail_receipt.screens", function (require) {
                     if(connection_problem){
                         self.gui.show_popup('error',{
                             'title': _t('The e-mail could not be sent'),
-                            'body': _t('Check your internet connection and try again.'),
+                            'body': _t('The e-mail could not be sent to ') + options["email"] + _t('. Check your internet connection and try again.'),
                         });
                          self.$('.button.email').removeClass("highlight");
                     }
