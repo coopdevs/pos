@@ -19,13 +19,17 @@ msgid "Check this box if you want to delay the creation of the picking created b
 msgstr ""
 
 #. module: pos_picking_delayed
+#: model_terms:ir.ui.view,arch_db:pos_picking_delayed.view_pos_config_form
+msgid "Delay the creation of the picking created by the PoS orders"
+msgstr ""
+
+#. module: pos_picking_delayed
 #: model:ir.model.fields,field_description:pos_picking_delayed.field_pos_order__has_picking_delayed
 msgid "Has Picking Delayed"
 msgstr ""
 
 #. module: pos_picking_delayed
 #: model:ir.model.fields,field_description:pos_picking_delayed.field_pos_config__picking_creation_delayed
-#: model_terms:ir.ui.view,arch_db:pos_picking_delayed.view_pos_config_form
 msgid "Picking Creation Delayed"
 msgstr ""
 

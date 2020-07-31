@@ -1,1 +1,3 @@
 queue
+partner-contact
+stock-logistics-barcode
